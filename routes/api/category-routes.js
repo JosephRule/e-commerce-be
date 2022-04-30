@@ -26,12 +26,12 @@ router.get('/:id', (req, res) => {
     },
     /// how to join product data? 
   })
-    .then(dbPostData => {
-      if (!dbPostData) {
+    .then(dbCategoryData => {
+      if (!dbCategoryData) {
         res.status(404).json({ message: 'No category found with this id' });
         return;
       }
-      res.json(dbPostData);
+      res.json(dbCategoryData);
     })
     .catch(err => {
       console.log(err);
@@ -45,7 +45,7 @@ router.post('/', (req, res) => {
   Category.create({
     category_name: req.body.category_name
   })
-    .then(dbPostData => res.json(dbPostData))
+    .then(dbCategoryData => res.json(dbCategoryData))
     .catch(err => {
       console.log(err);
       res.status(500).json(err);
@@ -53,24 +53,17 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-  // update a category by its `id` value
-  // this is broken and gives 200, which makes me q how to test this. 
   Category.update(
+    {tag_name: req.body.category_name},
     {
-      title: req.body.category_name
-    },
-    {
-      where: {
-        id: req.params.id
-      }
-    }
-  )
-    .then(dbPostData => {
-      if (!dbPostData) {
+      where: {id: req.params.id}
+    })
+    .then(dbCategoryData => {
+      if (!dbCategoryData) {
         res.status(404).json({ message: 'No category found with this id' });
         return;
       }
-      res.json(dbPostData);
+      res.json(dbCategoryData);
     })
     .catch(err => {
       console.log(err);
@@ -85,12 +78,12 @@ router.delete('/:id', (req, res) => {
       id: req.params.id
     }
   })
-    .then(dbPostData => {
-      if (!dbPostData) {
+    .then(dbCategoryData => {
+      if (!dbCategoryData) {
         res.status(404).json({ message: 'No category found with this id' });
         return;
       }
-      res.json(dbPostData);
+      res.json(dbCategoryData);
     })
     .catch(err => {
       console.log(err);
